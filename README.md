@@ -18,4 +18,4 @@ The program was written in Python 3.5.
 - When a pawn reaches the other side of the board, it turns into a queen rather than providing the option of turning into a different type of piece.
 - No en passant (a rare but valid chess move).
 
-![Screenshot](Figures/Screenshot.PNG “Screenshot”)
+![Screenshot](figures/Screenshot.png “Screenshot”)

@@ -11,3 +11,9 @@ To score the board, each piece has an assigned “value”, positive for white p
 To run the program, call “Python Game.py” from the command line.
 
 The program was written in Python 3.5.
+
+**Current limitations:**
+- No castling
+- The game ends upon taking the other player’s king, rather than checkmate. However, the AI will in every case choose to preserve its king over any other move. Therefore in nearly every case, a win against an AI is preceded by a true checkmate. The one exception is a rare stalemate, where the AI is not currently in check but the only valid move on the board puts its king into check. In real chess this would be a tie.
+- When a pawn reaches the other side of the board, it turns into a queen rather than providing the option of turning into a different type of piece.
+- No en passant (a rare but valid chess move).

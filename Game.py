@@ -4,7 +4,6 @@ from Board import Board
 from Pieces import Move
 from AI_player import AI_make_move
 
-
 class Game:
     """
     Chess game object.
@@ -167,28 +166,28 @@ class Game:
         self.board.make_move(user_move)
 
     def do_turn(self, player):
-    """
-    Performs a turn in the game for the given player.
+        """
+        Performs a turn in the game for the given player.
 
-    Parameters
-    ----------
-    player : str
-        The player making the move.
+        Parameters
+        ----------
+        player : str
+            The player making the move.
 
-    Returns
-    -------
-    white_check : bool
-        True if player white is in check.
+        Returns
+        -------
+        white_check : bool
+            True if player white is in check.
 
-    black_check : bool
-        True if player black is in check.
+        black_check : bool
+            True if player black is in check.
 
-    white_won : bool
-        True if player white won.
+        white_won : bool
+            True if player white won.
 
-    black_won : bool
-        True if player black won.
-    """
+        black_won : bool
+            True if player black won.
+        """
         white_check = False
         black_check = False
         white_won = False
@@ -232,17 +231,17 @@ class Game:
         return white_check, black_check, white_won, black_won
 
     def play_game(self):
-    """
-    Plays a game.
+        """
+        Plays a game.
 
-    Returns
-    -------
-    white_won : bool
-        True if player white won.
+        Returns
+        -------
+        white_won : bool
+            True if player white won.
 
-    black_won : bool
-        True if player black won.
-    """
+        black_won : bool
+            True if player black won.
+        """
         self.print_board()
         won = False
         while won is False:

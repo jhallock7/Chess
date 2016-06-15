@@ -158,7 +158,7 @@ class Game:
 
             user_move = Move((origin_x, origin_y), origin_piece, (target_x, target_y), target_piece)
 
-            if not self.is_valid_move(self.board, user_move, (target_x - origin_x, target_y - origin_y)):
+            if not self.is_valid_move(user_move):
                 print("Move was not valid")
             else:
                 valid_move = True
@@ -219,7 +219,7 @@ class Game:
 
         # If neither player won, print board stats
         if not white_won and not black_won:
-            other_player = "white" if player == "black" else "white"
+            other_player = "white" if player == "black" else "black"
             print("%s's turn, Turn" % other_player.capitalize(), self.turn + 1,
                   ', Score', self.board.score,
                   ', Pieces', self.board.num_pieces, '...')

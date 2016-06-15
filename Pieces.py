@@ -3,8 +3,7 @@
 import abc
 
 class Move:
-    """
-    Move object containing all the info needed to make and unmake the move.
+    """Move object containing all the info needed to make and unmake the move.
 
     Parameters
     ----------
@@ -46,8 +45,7 @@ class Move:
 
 
 class Piece:
-    """
-    Piece object for chess pieces.
+    """Piece object for chess pieces.
 
     Parameters
     ----------
@@ -158,8 +156,7 @@ class Piece:
 
 
 class Piece_Behavior(abc.ABC):
-    """
-    Abstract class for piece-type-specific methods and attributes.
+    """Abstract class for piece-type-specific methods and attributes.
 
     Attributes
     ----------
@@ -265,8 +262,7 @@ class Piece_Behavior(abc.ABC):
 
 
 class Rook_Behavior(Piece_Behavior):
-    """
-    Concrete subclass of Piece_Behavior for Rooks.
+    """Concrete subclass of Piece_Behavior for Rooks.
 
     Parameters
     ----------
@@ -325,8 +321,7 @@ class Rook_Behavior(Piece_Behavior):
 
 
 class Knight_Behavior(Piece_Behavior):
-    """
-    Concrete subclass of Piece_Behavior for Knights.
+    """Concrete subclass of Piece_Behavior for Knights.
 
     Parameters
     ----------
@@ -385,8 +380,7 @@ class Knight_Behavior(Piece_Behavior):
 
 
 class Bishop_Behavior(Piece_Behavior):
-    """
-    Concrete subclass of Piece_Behavior for Bishops.
+    """Concrete subclass of Piece_Behavior for Bishops.
 
     Parameters
     ----------
@@ -445,8 +439,7 @@ class Bishop_Behavior(Piece_Behavior):
 
 
 class Queen_Behavior(Piece_Behavior):
-    """
-    Concrete subclass of Piece_Behavior for Queen.
+    """Concrete subclass of Piece_Behavior for Queen.
 
     Parameters
     ----------
@@ -509,8 +502,7 @@ class Queen_Behavior(Piece_Behavior):
 
 
 class King_Behavior(Piece_Behavior):
-    """
-    Concrete subclass of Piece_Behavior for King.
+    """Concrete subclass of Piece_Behavior for King.
 
     Parameters
     ----------
@@ -569,8 +561,7 @@ class King_Behavior(Piece_Behavior):
 
 
 class Pawn_Behavior(Piece_Behavior):
-    """
-    Concrete subclass of Piece_Behavior for Pawn.
+    """Concrete subclass of Piece_Behavior for Pawn.
 
     Parameters
     ----------

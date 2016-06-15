@@ -5,8 +5,7 @@ from Pieces import Move
 from AI_player import AI_make_move
 
 class Game:
-    """
-    Chess game object.
+    """Chess game object.
 
     Parameters
     ----------
@@ -68,14 +67,11 @@ class Game:
         self.board = Board()
 
     def print_board(self):
-        """
-        Prints the board.
-        """
+        """Prints the board."""
         self.board.print_grid()
 
     def get_user_move(self):
-        """
-        Obtains a move from the user.
+        """Obtains a move from the user.
 
         Returns
         -------
@@ -104,8 +100,7 @@ class Game:
         return origin_x, origin_y, target_x, target_y
 
     def is_valid_move(self, move):
-        """
-        Checks if the move is a valid move.
+        """Checks if the move is a valid move.
 
         Parameters
         ----------
@@ -123,8 +118,7 @@ class Game:
         return False
 
     def make_user_move(self, player):
-        """
-        Retrives a valid move from the user and makes the move.
+        """Retrives a valid move from the user and makes the move.
 
         Parameters
         ----------
@@ -166,8 +160,7 @@ class Game:
         self.board.make_move(user_move)
 
     def do_turn(self, player):
-        """
-        Performs a turn in the game for the given player.
+        """Performs a turn in the game for the given player.
 
         Parameters
         ----------
@@ -231,8 +224,7 @@ class Game:
         return white_check, black_check, white_won, black_won
 
     def play_game(self):
-        """
-        Plays a game.
+        """Plays a game.
 
         Returns
         -------
@@ -255,8 +247,7 @@ class Game:
         return white_won, black_won
 
 def initialize_players():
-    """
-    Retrieves from the user info about the players needed to create a Game.
+    """Retrieves from the user info about the players needed to create a Game.
 
     Returns
     -------

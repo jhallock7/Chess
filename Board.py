@@ -4,8 +4,7 @@ from Pieces import Piece
 
 
 class Board():
-    """
-    Chess board object.
+    """Chess board object.
 
     Attributes
     ----------
@@ -38,26 +37,11 @@ class Board():
     check_check(player)
         Returns True if the player is in check.
 
-
-
+    check_won(player)
+        Returns True if the player won.
 
     print_board()
         Prints the board.
-
-    get_user_move()
-        Obtains a move from the user.
-
-    is_valid_move(move)
-        Checks if the move is a valid move.
-
-    make_user_move(player)
-        Retrieves a valid move from the user and makes the move.
-
-    do_turn(player)
-        Performs a turn in the game for the given player.
-
-    play_game()
-        Plays a game.
     """
 
     def __init__(self):
@@ -409,6 +393,18 @@ class Board():
         return False
 
     def check_won(self, player):
+        """Returns True if the player won by taking the other player's king.
+
+        Parameters
+        ----------
+        player : str
+            The player to check if won.
+
+        Returns
+        -------
+        won : bool
+            True if the player won by taking the other player's king.
+        """
         other_player = "black" if player == "white" else "white"
         for piece in self.pieces[other_player]:
             if piece.piece_type == "king":

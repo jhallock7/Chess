@@ -4,8 +4,7 @@ from Pieces import Move
 import random
 
 def AI_choose_move(board, player, depth):
-    """
-    Returns the best next move determined using a backtracking algorithm.
+    """Returns the best next move determined using a backtracking algorithm.
 
     Parameters
     ----------
@@ -56,8 +55,7 @@ def AI_choose_move(board, player, depth):
     return move
 
 def construct_candidates(board, player):
-    """
-    Returns a list of valid moves for the player.
+    """Returns a list of valid moves for the player.
 
     Parameters
     ----------
@@ -79,8 +77,7 @@ def construct_candidates(board, player):
     return candidate_moves
 
 def AI_make_move(board, player, depth):
-    """
-    Returns a list of valid moves for the player.
+    """Returns a list of valid moves for the player.
 
     Parameters
     ----------

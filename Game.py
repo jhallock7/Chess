@@ -4,6 +4,7 @@ from Board import Board
 from Pieces import Move
 from AI_player import AI_make_move
 
+
 class Game:
     """Chess game object.
 
@@ -12,17 +13,14 @@ class Game:
     white : str
         "user" or "AI", indicating whether the white
         pieces will be played by a user or by an AI.
-
     white_depth : int
-        For an AI player playing for white, indicates the the number of moves
+        For an AI player playing for white, indicates the number of moves
         ahead to calculate when choosing moves; None for user players.
-
     black : str
         "user" or "AI", indicating whether the black
         pieces will be played by a user or by an AI.
-
     black_depth : int
-        For an AI player playing for black, indicates the the number of moves
+        For an AI player playing for black, indicates the number of moves
         ahead to calculate when choosing moves; None for user players.
 
     Attributes
@@ -31,10 +29,8 @@ class Game:
         Dictionary specifying the type of player for each color:
             ("user", None) for users;
             ("AI", depth) for AIs.
-
     turn : int
         The current turn.
-
     board : board
         The Board object for the game.
 
@@ -42,48 +38,41 @@ class Game:
     ----------
     print_board()
         Prints the board.
-
     get_user_move()
         Obtains a move from the user.
-
     is_valid_move(move)
         Checks if the move is a valid move.
-
     make_user_move(player)
         Retrieves a valid move from the user and makes the move.
-
     do_turn(player)
         Performs a turn in the game for the given player.
-
     play_game()
         Plays a game.
     """
+
     def __init__(self, white, white_depth, black, black_depth):
+        """Initialize a Game object."""
         self.players = {"white": (white, white_depth),
                         "black": (black, black_depth)
                         }
-
         self.turn = 0
         self.board = Board()
 
     def print_board(self):
-        """Prints the board."""
+        """Print the board."""
         self.board.print_grid()
 
     def get_user_move(self):
-        """Obtains a move from the user.
+        """Obtain a move from the user.
 
         Returns
         -------
         origin_x : int
             The x position of the piece being moved.
-
         origin_y : int
             The y position of the piece being moved.
-
         target_x : int
             The x position of the location to which the piece is being moved.
-
         target_y : int
             The y position of the location to which the piece is being moved.
         """
@@ -100,7 +89,7 @@ class Game:
         return origin_x, origin_y, target_x, target_y
 
     def is_valid_move(self, move):
-        """Checks if the move is a valid move.
+        """Check if the move is a valid move.
 
         Parameters
         ----------
@@ -112,13 +101,14 @@ class Game:
         is_valid : bool
             True if the move is valid.
         """
-        move_summaries = [piece_move.summary for piece_move in move.origin_piece.get_moves()]
+        move_summaries = [piece_move.summary
+                          for piece_move in move.origin_piece.get_moves()]
         if move.summary in move_summaries:
             return True
         return False
 
     def make_user_move(self, player):
-        """Retrives a valid move from the user and makes the move.
+        """Retrive a valid move from the user and make the move.
 
         Parameters
         ----------
@@ -131,11 +121,11 @@ class Game:
 
             origin_x, origin_y, target_x, target_y = self.get_user_move()
 
-            if not self.board._inbounds((origin_x, origin_y)):
+            if self.board._inbounds((origin_x, origin_y)) is False:
                 print("Starting position was out of bounds")
                 continue
 
-            if not self.board._inbounds((target_x, target_y)):
+            if self.board._inbounds((target_x, target_y)) is False:
                 print("Ending position was out of bounds")
                 continue
 
@@ -152,7 +142,7 @@ class Game:
 
             user_move = Move((origin_x, origin_y), origin_piece, (target_x, target_y), target_piece)
 
-            if not self.is_valid_move(user_move):
+            if self.is_valid_move(user_move) is False:
                 print("Move was not valid")
             else:
                 valid_move = True
@@ -160,7 +150,7 @@ class Game:
         self.board.make_move(user_move)
 
     def do_turn(self, player):
-        """Performs a turn in the game for the given player.
+        """Perform a turn in the game for the given player.
 
         Parameters
         ----------
@@ -171,13 +161,10 @@ class Game:
         -------
         white_check : bool
             True if player white is in check.
-
         black_check : bool
             True if player black is in check.
-
         white_won : bool
             True if player white won.
-
         black_won : bool
             True if player black won.
         """
@@ -211,7 +198,7 @@ class Game:
             print("PLAYER BLACK WON! Score:", self.board.score)
 
         # If neither player won, print board stats
-        if not white_won and not black_won:
+        if white_won is False and black_won is False:
             other_player = "white" if player == "black" else "black"
             print("%s's turn, Turn" % other_player.capitalize(), self.turn + 1,
                   ', Score', self.board.score,
@@ -224,19 +211,17 @@ class Game:
         return white_check, black_check, white_won, black_won
 
     def play_game(self):
-        """Plays a game.
+        """Play a game.
 
         Returns
         -------
         white_won : bool
             True if player white won.
-
         black_won : bool
             True if player black won.
         """
         self.print_board()
-        won = False
-        while won is False:
+        for turn in range(10000):
             white_check, black_check, white_won, black_won = self.do_turn("white")
             if white_won or black_won:
                 break
@@ -246,25 +231,23 @@ class Game:
 
         return white_won, black_won
 
+
 def initialize_players():
-    """Retrieves from the user info about the players needed to create a Game.
+    """Retrieve from the user info about the players needed to create a Game.
 
     Returns
     -------
     white : str
         "user" or "AI", indicating whether the white
         pieces will be played by a user or by an AI.
-
     white_depth : int
-        For an AI player playing for white, indicates the the number of moves
+        For an AI player playing for white, indicates the number of moves
         ahead to calculate when choosing moves; None for user players.
-
     black : str
         "user" or "AI", indicating whether the black
         pieces will be played by a user or by an AI.
-
     black_depth : int
-        For an AI player playing for black, indicates the the number of moves
+        For an AI player playing for black, indicates the number of moves
         ahead to calculate when choosing moves; None for user players.
     """
     white = input("Would you like player white to be an AI (a) or a user (u)?: ")
@@ -282,6 +265,7 @@ def initialize_players():
     while black not in ['u', 'a']:
         print("Input must be either (u) or (a)")
         black = input("Would you like player black to be an AI (a) or a user (u)?: ")
+
     black = "user" if black == 'u' else 'AI'
     if black == 'AI':
         black_depth = int(input("with a depth parameter of...?: "))

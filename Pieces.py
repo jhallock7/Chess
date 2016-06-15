@@ -2,6 +2,7 @@
 
 import abc
 
+
 class Move:
     """Move object containing all the info needed to make and unmake the move.
 
@@ -9,21 +10,16 @@ class Move:
     ----------
     origin : tuple
         Position of piece to be moved.
-
     origin_piece : piece
         Piece being moved.
-
     destination : tuple
         Location where piece is being moved.
-
-    destination_piece : int
+    destination_piece : piece
         Piece at destination; "empty" if empty.
-
-    score_change : str
+    score_change : int
         Potential score change as result of move;
         used only in AI_make_move().
-
-    pawn_change : int
+    pawn_change : bool
         Indicates if the move results in a pawn reaching the back of the board,
         therefore turning into a queen.
 
@@ -32,16 +28,22 @@ class Move:
     summary : str
         String representing the move.
     """
+
     def __init__(self, origin=None, origin_piece=None, destination=None,
                  destination_piece=None, score_change=0, pawn_change=False):
+        """Initialize a Move object."""
         self.origin = origin
         self.origin_piece = origin_piece
         self.destination = destination
         self.destination_piece = destination_piece
         self.score_change = score_change
         self.pawn_change = pawn_change
+        # if origin is None, this is a "dummy" move
         if origin is not None:
-            self.summary = "%s from %s to %s" % (self.origin_piece.summary, self.origin, self.destination)
+            self.summary = ("%s from %s to %s" %
+                            (self.origin_piece.summary,
+                             self.origin,
+                             self.destination))
 
 
 class Piece:
@@ -51,14 +53,11 @@ class Piece:
     ----------
     board : board
         Board of the chess game to which the piece belongs.
-
     position : tuple
         Position of the piece on the board.
-
     player : str
         "white" if the piece is white;
         "black" if the piece is black.
-
     piece_type : str
         The type of piece, such as "rook", "pawn", etc...
 
@@ -66,17 +65,13 @@ class Piece:
     ----------
     piece_behavior : piece_behavior
         Object containing the functionality specific to the piece type.
-
     piece_type : str
         Type of chess piece (delegated to piece_behavior object).
-
     value : int
         Integer value of the piece (delegated to piece_behavior object).
-
     directions : list
         List of movements the piece can make, grouped by direction
         (delegated to piece_behavior object).
-
     summary : str
         String representing piece color and type
         (delegated to piece_behavior object).
@@ -86,12 +81,13 @@ class Piece:
     __str__()
         Returns a string representing the piece color and type
         (delegated to piece_behavior object).
-
     get_moves()
         Returns a list of valid moves for this piece
         (delegated to piece_behavior object).
     """
+
     def __init__(self, board, position, player, piece_type):
+        """Initialize a Piece object."""
         self.board = board
         self.position = position
         self.player = player
@@ -99,7 +95,7 @@ class Piece:
 
     @property
     def piece_behavior(self):
-        """Returns the piece_behavior object containing the functionality specific to the piece type."""
+        """Return the piece_behavior object containing the functionality specific to the piece type."""
         return self._piece_behavior
 
     @piece_behavior.setter
@@ -119,40 +115,31 @@ class Piece:
 
     @property
     def piece_type(self):
-        """Returns the type of chess piece (delegated to piece_behavior object)."""
+        """Return the type of chess piece (delegated to piece_behavior object)."""
         return self.piece_behavior.piece_type
 
     @property
     def value(self):
-        """Returns the integer value of the piece (delegated to piece_behavior object)."""
+        """Return the integer value of the piece (delegated to piece_behavior object)."""
         return self.piece_behavior.value
 
     @property
     def directions(self):
-        """
-        List of movements the piece can make, grouped by direction
-        (delegated to piece_behavior object).
-        """
+        """Return a list of movements the piece can make, grouped by direction (delegated to piece_behavior object)."""
         return self.piece_behavior.directions
 
     @property
     def summary(self):
-        """String representing piece color and type (delegated to piece_behavior object)."""
+        """Return a string representing piece color and type (delegated to piece_behavior object)."""
         return self.piece_behavior.summary
 
     def __str__(self):
-        """
-        Returns a string representing the piece color and type
-        (delegated to piece_behavior object).
-        """
+        """Return a string representing the piece color and type (delegated to piece_behavior object)."""
         return self.piece_behavior.summary
 
     def get_moves(self):
-        """
-        Returns a list of valid moves for this piece
-        (delegated to piece_behavior object).
-        """
-        return self.piece_behavior.get_moves(self.position, self.board)
+        """Return a list of valid moves for this piece (delegated to piece_behavior object)."""
+        return self.piece_behavior.get_moves(self.board, self.position)
 
 
 class Piece_Behavior(abc.ABC):
@@ -162,58 +149,54 @@ class Piece_Behavior(abc.ABC):
     ----------
     piece_type : str (abstract)
         Type of chess piece.
-
     value : int (abstract)
         Integer value of the piece.
-
     summary : str (abstract)
         String representing piece color and type.
-
     directions : list (abstract)
         List of movements the piece can make, grouped by direction.
 
     Methods
     ----------
-    get_moves(position, board)
+    get_moves(board, position)
         Returns a list of valid moves for this piece.
-
     _is_valid_move(vector, current_piece, other_piece)
         Returns True if the move is valid based on custom criteria.
     """
+
     @property
     @abc.abstractmethod
     def piece_type(self):
-        """Returns the type of chess piece."""
+        """Return the type of chess piece."""
         return ''
 
     @property
     @abc.abstractmethod
     def value(self):
-        """Returns the value of the piece."""
+        """Return the integer value of the piece."""
         return 0
 
     @property
     @abc.abstractmethod
     def summary(self):
-        """Returns a string representing the piece color and type."""
+        """Return a string representing the piece color and type."""
         return ''
 
     @property
     @abc.abstractmethod
     def directions(self):
-        """Returns a list of movements the piece can make, grouped by direction."""
+        """Return a list of movements the piece can make, grouped by direction."""
         return []
 
-    def get_moves(self, position, board):
-        """Returns a list of valid moves for this piece.
+    def get_moves(self, board, position):
+        """Return a list of valid moves for this piece.
 
         Parameters
         ----------
-        position : tuple
-            The current position of the piece on the board.
-
         board : board
             The current board.
+        position : tuple
+            The current position of the piece on the board.
 
         Returns
         -------
@@ -234,7 +217,7 @@ class Piece_Behavior(abc.ABC):
                 new_position = (position[0] + vector[0], position[1] + vector[1])
 
                 # Check if the proposed destination is inbounds
-                if not board._inbounds(new_position):
+                if board._inbounds(new_position) is False:
                     break
 
                 other_piece = board.grid[new_position[1]][new_position[0]]
@@ -244,7 +227,7 @@ class Piece_Behavior(abc.ABC):
                     break
 
                 # Check other validity conditions, mainly for pawn
-                if not self._is_valid_move(vector, current_piece, other_piece):
+                if self._is_valid_move(vector, current_piece, other_piece) is False:
                     break
 
                 # The destination is viable, add the move
@@ -257,7 +240,22 @@ class Piece_Behavior(abc.ABC):
         return moves
 
     def _is_valid_move(self, vector, current_piece, other_piece):
-        """Returns True if the move is valid based on custom criteria."""
+        """Return True if the move is a valid move based on custom criteria.
+
+        Parameters
+        ----------
+        vector : tuple
+            The potential move, relative to the piece's current position.
+        current_piece : piece
+            The current piece.
+        other_piece : piece
+            The (possibly-empty) piece located at the destination of the proposed move.
+
+        Returns
+        -------
+        valid : bool
+            True if the move is a valid move for a pawn.
+        """
         return True
 
 
@@ -274,17 +272,16 @@ class Rook_Behavior(Piece_Behavior):
     ----------
     piece_type : str
         Type of chess piece.
-
     value : int
         Integer value of the piece.
-
     summary : str
         String representing piece color and type.
-
     directions : list
         List of movements the piece can make, grouped by direction.
     """
+
     def __init__(self, player):
+        """Initialize a Rook_Behavior object."""
         self._piece_type = 'rook'
         self._value = 10 if player == "white" else -10
         self._summary = 'W-Rk' if player == "white" else 'B-Rk'
@@ -301,22 +298,22 @@ class Rook_Behavior(Piece_Behavior):
 
     @property
     def piece_type(self):
-        """Returns the type of chess piece."""
+        """Return the type of chess piece."""
         return self._piece_type
 
     @property
     def value(self):
-        """Returns the integer value of the piece."""
+        """Return the integer value of the piece."""
         return self._value
 
     @property
     def summary(self):
-        """Returns a string representing the piece color and type."""
+        """Return a string representing the piece color and type."""
         return self._summary
 
     @property
     def directions(self):
-        """Returns a list of movements the piece can make, grouped by direction."""
+        """Return a list of movements the piece can make, grouped by direction."""
         return self._directions
 
 
@@ -333,17 +330,16 @@ class Knight_Behavior(Piece_Behavior):
     ----------
     piece_type : str
         Type of chess piece.
-
     value : int
         Integer value of the piece.
-
     summary : str
         String representing piece color and type.
-
     directions : list
         List of movements the piece can make, grouped by direction.
     """
+
     def __init__(self, player):
+        """Initialize a Knight_Behavior object."""
         self._piece_type = 'knight'
         self._value = 6 if player == "white" else -6
         self._summary = 'W-Kt' if player == "white" else 'B-Kt'
@@ -354,28 +350,28 @@ class Knight_Behavior(Piece_Behavior):
         self._directions.append([(2, -1)])
         self._directions.append([(2, 1)])
         self._directions.append([(-1, -2)])
-        self._directions.append([(1, -2)])
         self._directions.append([(-1, 2)])
+        self._directions.append([(1, -2)])
         self._directions.append([(1, 2)])
 
     @property
     def piece_type(self):
-        """Returns the type of chess piece."""
+        """Return the type of chess piece."""
         return self._piece_type
 
     @property
     def value(self):
-        """Returns the integer value of the piece."""
+        """Return the integer value of the piece."""
         return self._value
 
     @property
     def summary(self):
-        """Returns a string representing the piece color and type."""
+        """Return a string representing the piece color and type."""
         return self._summary
 
     @property
     def directions(self):
-        """Returns a list of movements the piece can make, grouped by direction."""
+        """Return a list of movements the piece can make, grouped by direction."""
         return self._directions
 
 
@@ -392,17 +388,16 @@ class Bishop_Behavior(Piece_Behavior):
     ----------
     piece_type : str
         Type of chess piece.
-
     value : int
         Integer value of the piece.
-
     summary : str
         String representing piece color and type.
-
     directions : list
         List of movements the piece can make, grouped by direction.
     """
+
     def __init__(self, player):
+        """Initialize a Bishop_Behavior object."""
         self._piece_type = 'bishop'
         self._value = 6 if player == "white" else -6
         self._summary = 'W-Bs' if player == "white" else 'B-Bs'
@@ -419,27 +414,27 @@ class Bishop_Behavior(Piece_Behavior):
 
     @property
     def piece_type(self):
-        """Returns the type of chess piece."""
+        """Return the type of chess piece."""
         return self._piece_type
 
     @property
     def value(self):
-        """Returns the integer value of the piece."""
+        """Return the integer value of the piece."""
         return self._value
 
     @property
     def summary(self):
-        """Returns a string representing the piece color and type."""
+        """Return a string representing the piece color and type."""
         return self._summary
 
     @property
     def directions(self):
-        """Returns a list of movements the piece can make, grouped by direction."""
+        """Return a list of movements the piece can make, grouped by direction."""
         return self._directions
 
 
 class Queen_Behavior(Piece_Behavior):
-    """Concrete subclass of Piece_Behavior for Queen.
+    """Concrete subclass of Piece_Behavior for Queens.
 
     Parameters
     ----------
@@ -451,17 +446,16 @@ class Queen_Behavior(Piece_Behavior):
     ----------
     piece_type : str
         Type of chess piece.
-
     value : int
         Integer value of the piece.
-
     summary : str
         String representing piece color and type.
-
     directions : list
         List of movements the piece can make, grouped by direction.
     """
+
     def __init__(self, player):
+        """Initialize a Queen_Behavior object."""
         self._piece_type = 'queen'
         self._value = 18 if player == "white" else -18
         self._summary = 'W-Qn' if player == "white" else 'B-Qn'
@@ -482,27 +476,27 @@ class Queen_Behavior(Piece_Behavior):
 
     @property
     def piece_type(self):
-        """Returns the type of chess piece."""
+        """Return the type of chess piece."""
         return self._piece_type
 
     @property
     def value(self):
-        """Returns the integer value of the piece."""
+        """Return the integer value of the piece."""
         return self._value
 
     @property
     def summary(self):
-        """Returns a string representing the piece color and type."""
+        """Return a string representing the piece color and type."""
         return self._summary
 
     @property
     def directions(self):
-        """Returns a list of movements the piece can make, grouped by direction."""
+        """Return a list of movements the piece can make, grouped by direction."""
         return self._directions
 
 
 class King_Behavior(Piece_Behavior):
-    """Concrete subclass of Piece_Behavior for King.
+    """Concrete subclass of Piece_Behavior for Kings.
 
     Parameters
     ----------
@@ -514,17 +508,16 @@ class King_Behavior(Piece_Behavior):
     ----------
     piece_type : str
         Type of chess piece.
-
     value : int
         Integer value of the piece.
-
     summary : str
         String representing piece color and type.
-
     directions : list
         List of movements the piece can make, grouped by direction.
     """
+
     def __init__(self, player):
+        """Initialize a King_Behavior object."""
         self._piece_type = 'king'
         self._value = 200 if player == "white" else -200
         self._summary = 'W-Kg' if player == "white" else 'B-Kg'
@@ -541,27 +534,27 @@ class King_Behavior(Piece_Behavior):
 
     @property
     def piece_type(self):
-        """Returns the type of chess piece."""
+        """Return the type of chess piece."""
         return self._piece_type
 
     @property
     def value(self):
-        """Returns the integer value of the piece."""
+        """Return the integer value of the piece."""
         return self._value
 
     @property
     def summary(self):
-        """Returns a string representing the piece color and type."""
+        """Return a string representing the piece color and type."""
         return self._summary
 
     @property
     def directions(self):
-        """Returns a list of movements the piece can make, grouped by direction."""
+        """Return a list of movements the piece can make, grouped by direction."""
         return self._directions
 
 
 class Pawn_Behavior(Piece_Behavior):
-    """Concrete subclass of Piece_Behavior for Pawn.
+    """Concrete subclass of Piece_Behavior for Pawns.
 
     Parameters
     ----------
@@ -573,13 +566,10 @@ class Pawn_Behavior(Piece_Behavior):
     ----------
     piece_type : str
         Type of chess piece.
-
     value : int
         Integer value of the piece.
-
     summary : str
         String representing piece color and type.
-
     directions : list
         List of movements the piece can make, grouped by direction.
 
@@ -588,7 +578,9 @@ class Pawn_Behavior(Piece_Behavior):
     _is_valid_move(vector, current_piece, other_piece)
         Returns True if the move is a valid move for a pawn.
     """
+
     def __init__(self, player):
+        """Initialize a Pawn_Behavior object."""
         self._piece_type = 'pawn'
         self._value = 2 if player == "white" else -2
         self._summary = 'W-Pw' if player == "white" else 'B-Pw'
@@ -605,35 +597,33 @@ class Pawn_Behavior(Piece_Behavior):
 
     @property
     def piece_type(self):
-        """Returns the type of chess piece."""
+        """Return the type of chess piece."""
         return self._piece_type
 
     @property
     def value(self):
-        """Returns the integer value of the piece."""
+        """Return the integer value of the piece."""
         return self._value
 
     @property
     def summary(self):
-        """Returns a string representing the piece color and type."""
+        """Return a string representing the piece color and type."""
         return self._summary
 
     @property
     def directions(self):
-        """Returns a list of movements the piece can make, grouped by direction."""
+        """Return a list of movements the piece can make, grouped by direction."""
         return self._directions
 
     def _is_valid_move(self, vector, current_piece, other_piece):
-        """Returns True if the move is a valid move for a pawn.
+        """Return True if the move is a valid move for a pawn.
 
         Parameters
         ----------
         vector : tuple
             The potential move, relative to the piece's current position.
-
         current_piece : piece
             The current piece.
-
         other_piece : piece
             The (possibly-empty) piece located at the destination of the proposed move.
 

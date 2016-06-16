@@ -86,12 +86,12 @@ class Board():
                 self.grid[piece.position[1]][piece.position[0]] = piece
 
         # Set King pointers
-        for piece in self.pieces["white"]:
-            if piece.piece_type == "king":
-                self.kings["white"] = piece
-        for piece in self.pieces["black"]:
-            if piece.piece_type == "king":
-                self.kings["black"] = piece
+        self.kings["white"] = [piece
+                               for piece in self.pieces["white"]
+                               if piece.piece_type == "king"]
+        self.kings["black"] = [piece
+                               for piece in self.pieces["black"]
+                               if piece.piece_type == "king"]
 
     def _inbounds(self, position):
         """Return True if the position is within the bounds of the board.

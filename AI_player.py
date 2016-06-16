@@ -82,10 +82,10 @@ def construct_candidates(board, player):
     candidate_moves : list
         List of valid moves for the player.
     """
-    candidate_moves = []
-    for piece in board.pieces[player]:
-        for move in piece.get_moves():
-            candidate_moves.append(move)
+    candidate_moves = [move
+                       for piece in board.pieces[player]
+                       for move in piece.get_moves()]
+
     return candidate_moves
 
 

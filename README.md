@@ -12,7 +12,7 @@ The program was written in Python 3.5.
 
 **To Run**
 
-To run the program, call “Python Game.py” from the command line. You can then select whether each player should be controlled by a user (i.e. a person) or the AI. For the AIs you must set a “depth” parameter, which controls how many moves it looks ahead. Anything above 4 is likely to be unplayable.
+To run the program, call “Python Game.py” from the command line. You can then select whether each player should be controlled by a user (i.e. a person) or the AI. For the AIs you will be prompted to set a “depth” parameter, which controls how many moves it looks ahead. Anything above 4 is likely to be unplayable.
 
 
 
